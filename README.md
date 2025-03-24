@@ -1,12 +1,12 @@
 # xiaozhi-linux-SupportList
 
-设计参考来源：https://github.com/78/xiaozhi-esp32，此版本为支持全志Tina V85x系列平台，SDK版本为Tina 4。
+设计参考来源：[https://github.com/78/xiaozhi-esp32](https://github.com/78/xiaozhi-esp32 )  ，此版本为支持全志Tina V85x系列平台，SDK版本为Tina 4。
 
 演示视频：https://mp.weixin.qq.com/s/sC72kgotz9s2IEcYaz0BZg
 
 ## 项目介绍
 
-目前项目主要参考虾哥 AI小智，我们在Linux平台进行完整支持，其中有幸联系到虾哥本人，非常感谢在调试中给予我们建议方向，我们才能以最短的时间支持完成。
+目前项目主要参考虾哥 AI小智，我们在Linux平台进行完整支持，并将其支持在全志V85x Openwrt系统中。
 
 项目主要实现：
 
