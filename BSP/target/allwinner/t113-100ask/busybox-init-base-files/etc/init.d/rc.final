@@ -1,0 +1,21 @@
+#!/bin/sh
+
+echo "------run rc.final file-----"
+
+#amixer cset name="Headphone Switch" 1
+amixer set 'Headphone' on
+amixer set 'Headphone volume' 7
+
+amixer set 'ADC3 Input MIC3 Boost' on
+amixer set 'MIC3 Input Select' 'MIC_DIFFER'
+amixer set 'ADC3 volume' 255
+
+echo "------finish audio settings-------"
+
+if [ -e /tmp/private/ ]; then 
+	echo "clear private mount info"
+	umount /tmp/private/
+	rm -rf /tmp/private
+	ubiblock -r /dev/by-name/private
+fi
+
