@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+# Close IRCUT
+#
+
+
+start() {
+	printf "Close IRCUT........"
+	# 导出GPIO
+	echo 109 > /sys/class/gpio/export
+	echo 110 > /sys/class/gpio/export
+	# 设置输出
+	echo out > /sys/class/gpio/gpio109/direction
+	echo out > /sys/class/gpio/gpio110/direction
+	# 关闭IRCUT
+	echo 0 > /sys/class/gpio/gpio109/value
+	echo 1 > /sys/class/gpio/gpio110/value
+}
+
+stop() {
+	printf "IRCUT stop.........."
+}
+
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  restart|reload)
+	stop
+	start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?

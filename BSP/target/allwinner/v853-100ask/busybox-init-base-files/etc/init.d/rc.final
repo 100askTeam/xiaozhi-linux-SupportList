@@ -1,0 +1,52 @@
+#!/bin/sh
+
+echo "------run rc.final file-----"
+#echo "insmod wifi modules"
+#insmod  /lib/modules/3.4.39/8723ds.ko
+#insmod  /lib/modules/3.4.39/bcmdhd.ko
+#insmod  /lib/modules/3.4.39/xradio_mac.ko
+#insmod  /lib/modules/3.4.39/xradio_core.ko
+#insmod  /lib/modules/3.4.39/xradio_wlan.ko
+
+export LD_LIBRARY_PATH=/usr/lib/eyesee-mpp:${LD_LIBRARY_PATH}
+ulimit -c unlimited
+echo /mnt/extsd/coredump-%e-%p-%s-%t > /proc/sys/kernel/core_pattern
+
+for i in /etc/init.d/S??* ;do
+
+     # Ignore dangling symlinks (if any).
+     [ ! -f "$i" ] && continue
+
+     case "$i" in
+    *.sh)
+        # Source shell script for speed.
+        (
+        trap - INT QUIT TSTP
+        set start
+        . $i
+        )
+        ;;
+    *)
+        # No sh extension, so fork subprocess.
+        $i start
+        ;;
+    esac
+done
+
+powerkey_daemon &
+
+if [ -z "$(grep '\<vfat\>' /proc/mounts)" ]; then
+    ! /bin/mount -t vfat /dev/mmcblk0 /mnt/extsd 2>/dev/null &&
+    /bin/mount -t vfat /dev/mmcblk0p1 /mnt/extsd
+
+    ! /bin/mount -t vfat /dev/mmcblk1 /mnt/sdcard 2>/dev/null &&
+    /bin/mount -t vfat /dev/mmcblk1p1 /mnt/sdcard
+fi
+
+dd if=/dev/zero of=/dev/fb0&
+sleep 3 
+
+#/usr/bin/sample_virvi2vo -path /usr/bin/sample_virvi2vo.conf&
+
+rm /etc/localtime
+ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
