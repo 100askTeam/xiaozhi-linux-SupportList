@@ -1,16 +1,31 @@
-# xiaozhi-linux-SupportList
-## 仓库介绍
-目前此仓库只支持百问网韦东山系列Linux开发板硬件运行小智，
-通过分支方式进行统一管理。
-配套系统镜像通过 release 发布。
+# IMX6ULL-PRO 运行AI小智
 
-每个分支是独立的硬件平台，
-因不同的硬件 有不同的 外围差异，以及SDK系统差异，我们目前主要通过 如下去进行管理。
-``` bash
-BSP ---> 板级补丁，包含底层驱动，设备树，系统overlay相关。
-xiaozhi-linux ---> 包含针对于当前平台硬件接口，xiaozhi linux做的相关改动。
-Libs ---> 包含需要外编，无法直接 打入 BSP 补丁中的相关依赖库文件
-README ---> 介绍如何编译，如何使用，并最终构建一个 Linux系统上运行小智的完整步骤。
+## 环境配置
+
+开发环境建议 ubuntu18 版本下
+
+获取源码：
+
+```bash
+git clone https://e.coding.net/weidongshan/buildroot/buildroot.git Buildoot20-imx6ull
+git clone -b imx6ull https://e.coding.net/weidongshan/ST-Buildoot-dl/ST-Buildoot-dl.git dl
+cd  Buildoot20-imx6ull 
+cp ../dl -rfvd .
+make 100ask_imx6ull-pro-aixiaozhi_defconfig
+make -j32
 ```
 
-## 提交标准
+编译完成后，会在 output/images/ 生成一个 100ask_imx6ull-pro-ai-xiaozhi-v1.img 系统镜像文件。将其拷贝到Windows 系统中。
+
+## 烧写启动
+
+烧写工具下载：
+
+https://dl.100ask.net/Hardware/MPU/IMX6ULL-PRO/100ask_imx6ull_flashing_tool_v4.0.zip
+
+下载完成后解压打开，双击运行 100ask_imx6ull_flashing_tool_v4.0.exe 之后按照如下图所示 切换到 专业版 界面，之后点击映像文件，选择我们编译生成的100ask_imx6ull-pro-ai-xiaozhi-v1.img 镜像，然后将开发板设置为USB 烧录模式 （不懂可以看 http://wiki.100ask.org/100ask_imx6ull_tool）  烧录完成后，设置emmc启动，即可正常进入 AI小智系统。
+
+注意： 启动需要先将 可以联网的 网线 连接至 开发板 ETH1 /ETH0 接口。
+
+![image-20250402180612343](pic/image-20250402180612343.png)
+
