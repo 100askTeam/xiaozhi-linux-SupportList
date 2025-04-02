@@ -18,12 +18,7 @@
 
 ```
 ├── BSP
-│   ├── build
-│   ├── device
-│   └── target
-├── externPackage
-│   ├── boost_1_69_0
-│   └── websocketpp-0.8.1
+│   └── k230_canmv_dongshanpi_defconfig
 ├── LICENSE
 ├── xiaozhi-linux
 │   ├── control_center
